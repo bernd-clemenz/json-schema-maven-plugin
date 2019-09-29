@@ -42,8 +42,8 @@ import java.util.Set;
 @SuppressWarnings("unused")
 public class JsonSchemaPlugin extends AbstractMojo {
 
-  @Parameter(property = "packageToScan", required = true)
-  private String[] packageToScan;
+  @Parameter(property = "packagesToScan", required = true)
+  private String[] packagesToScan;
 
   @Parameter(
     property = "baseClassName",
@@ -74,10 +74,11 @@ public class JsonSchemaPlugin extends AbstractMojo {
 
   private void makeOutputDirectory()
   throws IOException {
-    outputDirectory = m_mavenOutputDirectory + File.pathSeparator + outputDirectory;
+    outputDirectory = m_mavenOutputDirectory + File.separator + outputDirectory;
     File dir = new File(outputDirectory);
     if(!dir.exists()) {
       Files.createDirectories(dir.toPath());
+      getLog().debug("Create output directory: " + dir.getAbsolutePath());
     }
   }
 
@@ -91,9 +92,9 @@ public class JsonSchemaPlugin extends AbstractMojo {
   throws MojoExecutionException {
     getLog().info("Generate JSON schema files");
 
-    Objects.requireNonNull(packageToScan, "Need a package to scan");
-    getLog().info("Package(s) to scan is: " + Arrays.deepToString(packageToScan));
-    if(packageToScan.length == 0) {
+    Objects.requireNonNull(packagesToScan, "Need a package to scan");
+    getLog().info("Package(s) to scan is: " + Arrays.deepToString(packagesToScan));
+    if(packagesToScan.length == 0) {
       getLog().info("No packages to scan, nothing to do");
       return;
     }
@@ -121,7 +122,7 @@ public class JsonSchemaPlugin extends AbstractMojo {
         ObjectMapper mapper = new ObjectMapper();
         JsonSchemaGenerator schemaGen = new JsonSchemaGenerator(mapper);
         Class<?> baseClass = schemaClassLoader.findClass(baseClassName);
-        Reflections reflections = new Reflections(packageToScan);
+        Reflections reflections = new Reflections(packagesToScan);
         Set<Class<?>> subTypes = reflections.getSubTypesOf((Class<Object>) baseClass);
         subTypes.stream().forEach(typ -> {
           getLog().info(typ.getCanonicalName());
