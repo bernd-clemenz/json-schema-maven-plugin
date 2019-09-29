@@ -25,26 +25,25 @@ import java.util.Map;
  * @since 1.0.0
  */
 public class SchemaClassLoader extends URLClassLoader {
-  private final MavenProject m_mavenProject;
   private final Log m_log;
   private final Map<String,Class<?>> m_classMap = Collections.synchronizedMap(new HashMap<>());
 
   /**
    * Constructor.
    *
-   * @param prj the Maven project
+   * @param mavenProject the Maven project
    * @param mavenLog the maven logger
    * @param parent the parent class-loader
    * @throws DependencyResolutionRequiredException forwarded from API
    */
-  SchemaClassLoader(final MavenProject prj,
+  SchemaClassLoader(final MavenProject mavenProject,
                     final Log mavenLog,
-                    final ClassLoader parent) throws DependencyResolutionRequiredException {
+                    final ClassLoader parent)
+  throws DependencyResolutionRequiredException {
     super(new URL[] {},parent);
-    m_mavenProject = prj;
     m_log = mavenLog;
 
-    m_mavenProject.getCompileClasspathElements().forEach(s -> {
+    mavenProject.getCompileClasspathElements().forEach(s -> {
       try {
         addURL(new File(s).toURI().toURL());
         m_log.debug("Element: " + s);

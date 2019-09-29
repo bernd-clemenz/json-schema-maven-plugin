@@ -28,7 +28,7 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * Plugin for Maven to create JSON Schema files
+ * Plugin for Maven to create JSON Schema files.
  *
  * @author Bernd Clemenz
  * @version 1.0.0
