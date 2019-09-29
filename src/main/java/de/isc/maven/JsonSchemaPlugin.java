@@ -51,9 +51,7 @@ public class JsonSchemaPlugin extends AbstractMojo {
     defaultValue = "java.lang.Object")
   private String baseClassName;
 
-  @Parameter(
-    property = "outputDirectory",
-    defaultValue = "")
+  @Parameter(property = "outputDirectory")
   private String outputDirectory;
 
   @Parameter(defaultValue = "${session}", required = true)
@@ -123,8 +121,9 @@ public class JsonSchemaPlugin extends AbstractMojo {
         JsonSchemaGenerator schemaGen = new JsonSchemaGenerator(mapper);
         Class<?> baseClass = schemaClassLoader.findClass(baseClassName);
         Reflections reflections = new Reflections(packagesToScan);
+        @SuppressWarnings("unchecked")
         Set<Class<?>> subTypes = reflections.getSubTypesOf((Class<Object>) baseClass);
-        subTypes.stream().forEach(typ -> {
+        subTypes.forEach(typ -> {
           getLog().info(typ.getCanonicalName());
           try {
             JsonSchema schema = schemaGen.generateSchema(typ);
