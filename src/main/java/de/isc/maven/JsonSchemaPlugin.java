@@ -115,7 +115,7 @@ public class JsonSchemaPlugin extends AbstractMojo {
         Thread.currentThread().setContextClassLoader(schemaClassLoader);
 
         /*
-         * process classes an write Schema files.
+         * process classes and write Schema files.
          */
         ObjectMapper mapper = new ObjectMapper();
         JsonSchemaGenerator schemaGen = new JsonSchemaGenerator(mapper);
@@ -127,11 +127,11 @@ public class JsonSchemaPlugin extends AbstractMojo {
           getLog().info(typ.getCanonicalName());
           try {
             JsonSchema schema = schemaGen.generateSchema(typ);
-            Path tgt = Paths.get(outputDirectory,typ.getSimpleName() + "-schema.json");
+            Path tgt = Paths.get(outputDirectory,typ.getName() + "-schema.json");
             Files.write(tgt,mapper.writerWithDefaultPrettyPrinter()
                                   .writeValueAsString(schema)
                                   .getBytes(StandardCharsets.UTF_8));
-            getLog().info("Written: " + tgt.toString());
+            getLog().info("Written: " + tgt.toFile().getName());
           } catch(IOException x) {
             getLog().error(x.getMessage());
           }
