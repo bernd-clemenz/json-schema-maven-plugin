@@ -7,6 +7,7 @@ package de.isc.maven;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.module.jsonSchema.JsonSchema;
 import com.fasterxml.jackson.module.jsonSchema.JsonSchemaGenerator;
+import com.fasterxml.jackson.module.jsonSchema.annotation.JsonHyperSchema;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -124,16 +125,18 @@ public class JsonSchemaPlugin extends AbstractMojo {
         @SuppressWarnings("unchecked")
         Set<Class<?>> subTypes = reflections.getSubTypesOf((Class<Object>) baseClass);
         subTypes.forEach(typ -> {
-          getLog().info(typ.getCanonicalName());
-          try {
-            JsonSchema schema = schemaGen.generateSchema(typ);
-            Path tgt = Paths.get(outputDirectory,typ.getName() + "-schema.json");
-            Files.write(tgt,mapper.writerWithDefaultPrettyPrinter()
-                                  .writeValueAsString(schema)
-                                  .getBytes(StandardCharsets.UTF_8));
-            getLog().info("Written: " + tgt.toFile().getName());
-          } catch(IOException x) {
-            getLog().error(x.getMessage());
+          if(typ.isAnnotationPresent(JsonHyperSchema.class)) {
+            getLog().info("Working on: " + typ.getCanonicalName());
+            try {
+              JsonSchema schema = schemaGen.generateSchema(typ);
+              Path tgt = Paths.get(outputDirectory, typ.getName() + "-schema.json");
+              Files.write(tgt, mapper.writerWithDefaultPrettyPrinter()
+                .writeValueAsString(schema)
+                .getBytes(StandardCharsets.UTF_8));
+              getLog().info("Written: " + tgt.toFile().getName());
+            } catch(IOException x) {
+              getLog().error(x.getMessage());
+            }
           }
         });
       } finally {

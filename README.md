@@ -41,7 +41,7 @@ This Maven plugin generates JSON-Schema files from POJOs using
 
 ## Goals and phase
 
-* **json-schema** is the only goal
+* **json-schema** is the only goal.
 * **process-classes** is the mandatory lifecycle phase for this plugin.
 
 # Configuration
@@ -49,7 +49,7 @@ This Maven plugin generates JSON-Schema files from POJOs using
 | Name | Description |
 |------|------------|
 | **packagesToScan** | A list of packages, where your model classes exist |
-| **baseClassName** | Fully qualified of the base class of your model classes |
+| **baseClassName** | Fully qualified name of the base class of your model classes |
 | **outputDirectory** | Output directory name, relative to Mavens output path |
 
 * [Lifecycle reference](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html)
@@ -58,4 +58,4 @@ This Maven plugin generates JSON-Schema files from POJOs using
     
 ## History
 
-Just created for use in some RESTFull API projects, where it proofed helpful.
+Created for use in some RESTFull API projects, where it proofed helpful.
