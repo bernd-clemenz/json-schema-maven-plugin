@@ -15,7 +15,7 @@ This Maven plugin generates JSON-Schema files from POJOs using
 <plugins>
   <!-- your other plugins -->
   <plugin>
-    <groupId>de.isc.maven</groupId>
+    <groupId>de.isc-software.maven</groupId>
     <artifactId>json-schema-maven-plugin</artifactId>
     <version>1.0.0</version>
     <configuration>
@@ -59,3 +59,13 @@ This Maven plugin generates JSON-Schema files from POJOs using
 ## History
 
 Created for use in some RESTFull API projects, where it proofed helpful.
+
+## Notes
+
+For release in Maven repository create signatures:
+
+```shell script
+gpg -ab json-schema-maven-plugin-VERSION.jar
+gpg -ab json-schema-maven-plugin-VERSION-javadoc.jar
+gpg -ab json-schema-maven-plugin-VERSION-sources.jar
+```
