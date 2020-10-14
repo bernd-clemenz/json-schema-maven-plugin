@@ -39,7 +39,7 @@
     Creates JSON Schema files in Mavens output directory for classes.
   </description>
   <properties>
-    <jackson.version>2.10.0</jackson.version>
+    <jackson.version>2.11.3</jackson.version>
     <java.version>1.8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -103,7 +103,7 @@
     <dependency>
       <groupId>com.fasterxml.jackson.module</groupId>
       <artifactId>jackson-module-jsonSchema</artifactId>
-      <version>2.10.0.pr3</version>
+      <version>${jackson.version}</version>
     </dependency>
 
     <dependency>
@@ -115,12 +115,12 @@
     <dependency>
       <groupId>org.reflections</groupId>
       <artifactId>reflections</artifactId>
-      <version>0.9.11</version>
+      <version>0.9.12</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.12</version>
+      <version>[4.13.1,)</version>
       <scope>test</scope>
     </dependency>
     <dependency>
